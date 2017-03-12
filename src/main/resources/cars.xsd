@@ -1,0 +1,121 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://spring.io/guides/gs-producing-web-service"
+           targetNamespace="http://spring.io/guides/gs-producing-web-service" elementFormDefault="qualified">
+
+    <xs:element name="findCarRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long" minOccurs="0"/>
+                <xs:element name="type" type="tns:type" minOccurs="0"/>
+                <xs:element name="make" type="xs:string" minOccurs="0"/>
+                <xs:element name="yearFrom" type="xs:int" minOccurs="0"/>
+                <xs:element name="yearTo" type="xs:int" minOccurs="0"/>
+                <xs:element name="priceFrom" type="xs:decimal" minOccurs="0"/>
+                <xs:element name="priceTo" type="xs:decimal" minOccurs="0"/>
+                <xs:element name="color" type="xs:string" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="findCarResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="cars" type="tns:car" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="deleteCarRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="addCarRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="type" type="tns:type"/>
+                <xs:element name="make" type="xs:string"/>
+                <xs:element name="model" type="xs:string"/>
+                <xs:element name="year" type="xs:int"/>
+                <xs:element name="price" type="xs:decimal"/>
+                <xs:element name="doors" type="xs:int"/>
+                <xs:element name="color" type="xs:string"/>
+                <xs:element name="fuel" type="tns:fuel"/>
+                <xs:element name="firstRegistration" type="xs:dateTime"/>
+                <xs:element name="fuelConsumption" type="xs:float"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="addCarResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="car" type="tns:car"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="editCarRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+                <xs:element name="type" type="tns:type" minOccurs="0"/>
+                <xs:element name="make" type="xs:string" minOccurs="0"/>
+                <xs:element name="model" type="xs:string" minOccurs="0"/>
+                <xs:element name="year" type="xs:int" minOccurs="0"/>
+                <xs:element name="price" type="xs:decimal" minOccurs="0"/>
+                <xs:element name="doors" type="xs:int" minOccurs="0"/>
+                <xs:element name="color" type="xs:string" minOccurs="0"/>
+                <xs:element name="fuel" type="tns:fuel" minOccurs="0"/>
+                <xs:element name="firstRegistration" type="xs:dateTime" minOccurs="0"/>
+                <xs:element name="fuelConsumption" type="xs:float" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="editCarResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="car" type="tns:car"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+
+    <xs:complexType name="car">
+        <xs:sequence>
+            <xs:element name="id" type="xs:long"/>
+            <xs:element name="type" type="tns:type"/>
+            <xs:element name="make" type="xs:string"/>
+            <xs:element name="model" type="xs:string"/>
+            <xs:element name="year" type="xs:int"/>
+            <xs:element name="price" type="xs:decimal"/>
+            <xs:element name="doors" type="xs:int"/>
+            <xs:element name="color" type="xs:string"/>
+            <xs:element name="fuel" type="tns:fuel"/>
+            <xs:element name="firstRegistration" type="xs:dateTime"/>
+            <xs:element name="fuelConsumption" type="xs:float"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="type">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Microcar"/>
+            <xs:enumeration value="Hatchback"/>
+            <xs:enumeration value="Family car"/>
+            <xs:enumeration value="Luxury"/>
+            <xs:enumeration value="SUV"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="fuel">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Petrol"/>
+            <xs:enumeration value="Diesel"/>
+            <xs:enumeration value="LPG"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>
