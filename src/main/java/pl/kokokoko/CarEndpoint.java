@@ -26,11 +26,39 @@ public class CarEndpoint {
     @ResponsePayload
     public FindCarResponse findCar(@RequestPayload FindCarRequest request) throws ParseException, DatatypeConfigurationException {
         FindCarResponse response = new FindCarResponse();
-        List<Car> cars = carRepository.findCar(request.getId(), request.getType(), request.getMake(),
+        List<CarEntity> cars = carRepository.findCar(request.getId(), request.getType(), request.getMake(),
                 request.getYearFrom(), request.getYearTo(), request.getPriceFrom(), request.getPriceTo(),
                 request.getColor());
         List<Car> responseCars = response.getCars();
-        responseCars.addAll(cars);
+        for (CarEntity carEntity : cars) {
+            Converter converter = new Converter();
+            Car car = converter.convertToCar(carEntity);
+            responseCars.add(car);
+        }
+        return response;
+    }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "addCarRequest")
+    @ResponsePayload
+    public AddCarResponse addCar(@RequestPayload AddCarRequest request) throws DatatypeConfigurationException {
+        AddCarResponse response = new AddCarResponse();
+        Converter converter = new Converter();
+        CarEntity carEntity = converter.convertToCarEntity(request.getCar());
+        CarEntity ce = carRepository.addCar(carEntity);
+        Car c = converter.convertToCar(ce);
+        response.setCar(c);
+        return response;
+    }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "editCarRequest")
+    @ResponsePayload
+    public EditCarResponse editCar(@RequestPayload EditCarRequest request) throws DatatypeConfigurationException {
+        EditCarResponse response = new EditCarResponse();
+        Converter converter = new Converter();
+        CarEntity carEntity = converter.convertToCarEntity(request.getCar());
+        CarEntity ce = carRepository.editCar(carEntity);
+        Car c = converter.convertToCar(ce);
+        response.setCar(c);
         return response;
     }
 
@@ -40,27 +68,6 @@ public class CarEndpoint {
         carRepository.deleteCar(request.getId());
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "addCarRequest")
-    @ResponsePayload
-    public AddCarResponse addCar(@RequestPayload AddCarRequest request) {
-        AddCarResponse response = new AddCarResponse();
-        Car car = carRepository.addCar(request.getType(), request.getMake(), request.getModel(), request.getYear(),
-                request.getPrice(), request.getDoors(), request.getColor(), request.getFuel(), request.getFirstRegistration(),
-                request.getFuelConsumption());
-        response.setCar(car);
-        return response;
-    }
-
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "editCarRequest")
-    @ResponsePayload
-    public EditCarResponse editCar(@RequestPayload EditCarRequest request) {
-        EditCarResponse response = new EditCarResponse();
-        Car car = carRepository.editCar(request.getId(), request.getType(), request.getMake(), request.getModel(),
-                request.getYear(), request.getPrice(), request.getDoors(), request.getColor(), request.getFuel(),
-                request.getFirstRegistration(), request.getFuelConsumption());
-        response.setCar(car);
-        return response;
-    }
 
 }
 
