@@ -2,6 +2,7 @@ package pl.kokokoko;
 
 import io.spring.guides.gs_producing_web_service.Fuel;
 import io.spring.guides.gs_producing_web_service.Type;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,6 +16,7 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -67,6 +69,27 @@ public class CarRepositoryTest {
     }
 
     @Test
+    public void shouldReturnAllCars() {
+        List<CarEntity> cars = carRepository.findCar(null, null, null, null, null, null,
+                null, null);
+        Assert.assertEquals(3, cars.size());
+//        Long id = cars.get(0).getId();
+//        System.out.println(id);
+    }
+
+    @Test
+    public void shouldFindCar() {
+        List<CarEntity> cars = carRepository.findCar(null, null, "Jeep", null, null, null,
+                null, null);
+        String color = null;
+        if (cars.size() > 0) {
+            CarEntity car = cars.get(0);
+            color = car.getColor();
+        }
+
+        Assert.assertEquals("Silver", color);
+    }
+    @Test
 //    @Rollback(false)
     public void shouldAddCar() throws ParseException, DatatypeConfigurationException {
         CarEntity car = new CarEntity();
@@ -82,11 +105,37 @@ public class CarRepositoryTest {
         car.setFirstRegistration(returnDateFromString("01.03.2013 14:00:00"));
         car.setFuelConsumption(6.4f);
         carRepository.addCar(car);
+
+        Assert.assertEquals(4, (carRepository.findCar(null, null, null, null, null,
+                null, null, null)).size());
     }
 
+    @Test
     public void shouldEditCar() {
+        List<CarEntity> cars = carRepository.findCar(null, null, null, null, null,
+                null, null, null);
+        CarEntity car = cars.get(2);
+        System.out.println(car.getColor());
+        Long id = car.getId();
+        car.setColor("Pink");
+        System.out.println(car.getColor());
+        carRepository.editCar(car);
 
+        List<CarEntity> cars2 = carRepository.findCar(id, null, null, null, null, null, null,
+                null);
+        String color = cars2.get(0).getColor();
 
+        Assert.assertEquals("Pink", color);
+    }
+
+    @Test
+    public void shouldDeleteCar() {
+        List<CarEntity> cars = carRepository.findCar(null, null, null, null, null, null,
+                null, null);
+        Long id = cars.get(0).getId();
+        carRepository.deleteCar(id);
+        Assert.assertEquals(2, (carRepository.findCar(null, null, null, null, null,
+                null, null, null)).size());
     }
 
     private Date returnDateFromString(String dateTime) throws ParseException, DatatypeConfigurationException {

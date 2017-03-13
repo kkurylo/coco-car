@@ -79,13 +79,11 @@ public class CarRepository {
 
     public CarEntity addCar(CarEntity car) {
         entityManager.persist(car);
-        entityManager.detach(car);
         return car;
     }
 
     public CarEntity editCar(CarEntity car) {
         entityManager.merge(car);
-        entityManager.detach(car);
         return car;
     }
 
