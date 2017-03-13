@@ -2,6 +2,7 @@ package pl.kokokoko;
 
 import io.spring.guides.gs_producing_web_service.Fuel;
 import io.spring.guides.gs_producing_web_service.Type;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,21 +24,69 @@ public class CarRepositoryTest {
     @Autowired
     private CarRepository carRepository;
 
-    @Test
-    public void shouldAddCar() throws ParseException, DatatypeConfigurationException {
+    @Before
+    public void initDatabaseWithCars() throws ParseException, DatatypeConfigurationException {
         CarEntity car1 = new CarEntity();
-        car1.setId(1L);
-        car1.setType(returnStringFromType(Type.HATCHBACK));
-        car1.setMake("Volkswagen");
-        car1.setModel("Golf VII");
-        car1.setYear(2013);
-        car1.setPrice(new BigDecimal("65000.00"));
-        car1.setDoors(5);
-        car1.setColor("White");
-        car1.setFuel(returnStringFromFuel(Fuel.DIESEL));
-        car1.setFirstRegistration(returnDateFromString("01.03.2013 14:00:00"));
-        car1.setFuelConsumption(6.4f);
+        car1.setType(returnStringFromType(Type.LUXURY));
+        car1.setMake("BMW");
+        car1.setModel("Seria 3 E90");
+        car1.setYear(2007);
+        car1.setPrice(new BigDecimal("77000.00"));
+        car1.setDoors(2);
+        car1.setColor("Gold");
+        car1.setFuel(returnStringFromFuel(Fuel.PETROL));
+        car1.setFirstRegistration(returnDateFromString("20.06.2007 14:00:00"));
+        car1.setFuelConsumption(14.0f);
         carRepository.addCar(car1);
+
+        CarEntity car2 = new CarEntity();
+        car2.setType(returnStringFromType(Type.SUV));
+        car2.setMake("Jeep");
+        car2.setModel("Grand Cherokee IV");
+        car2.setYear(2011);
+        car2.setPrice(new BigDecimal("95000.00"));
+        car2.setDoors(5);
+        car2.setColor("Silver");
+        car2.setFuel(returnStringFromFuel(Fuel.PETROL));
+        car2.setFirstRegistration(returnDateFromString("15.05.2012 12:00:00"));
+        car2.setFuelConsumption(12.0f);
+        carRepository.addCar(car2);
+
+        CarEntity car3 = new CarEntity();
+        car3.setType(returnStringFromType(Type.MICROCAR));
+        car3.setMake("Fiat");
+        car3.setModel("500");
+        car3.setYear(2010);
+        car3.setPrice(new BigDecimal("14700.00"));
+        car3.setDoors(3);
+        car3.setColor("Red");
+        car3.setFuel(returnStringFromFuel(Fuel.PETROL));
+        car3.setFirstRegistration(returnDateFromString("15.02.2010 12:30:00"));
+        car3.setFuelConsumption(4.0f);
+        carRepository.addCar(car3);
+    }
+
+    @Test
+//    @Rollback(false)
+    public void shouldAddCar() throws ParseException, DatatypeConfigurationException {
+        CarEntity car = new CarEntity();
+//        car1.setId(1L);
+        car.setType(returnStringFromType(Type.HATCHBACK));
+        car.setMake("Volkswagen");
+        car.setModel("Golf VII");
+        car.setYear(2013);
+        car.setPrice(new BigDecimal("65000.00"));
+        car.setDoors(5);
+        car.setColor("White");
+        car.setFuel(returnStringFromFuel(Fuel.DIESEL));
+        car.setFirstRegistration(returnDateFromString("01.03.2013 14:00:00"));
+        car.setFuelConsumption(6.4f);
+        carRepository.addCar(car);
+    }
+
+    public void shouldEditCar() {
+
+
     }
 
     private Date returnDateFromString(String dateTime) throws ParseException, DatatypeConfigurationException {

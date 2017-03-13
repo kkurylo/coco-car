@@ -79,7 +79,7 @@ public class CarRepository {
 
     public CarEntity addCar(CarEntity car) {
         entityManager.persist(car);
-        entityManager.detach(car); //zeby odpiac to od bazy
+        entityManager.detach(car);
         return car;
     }
 
