@@ -30,7 +30,7 @@ public class CarRepository {
         List<Predicate> restrictions = new ArrayList<>();
 
         if (id != null) {
-            Predicate p1 = cb.equal(root.get("id"), id); // root.get("id") to kolumna, w której będzie szukane pole o wartości id
+            Predicate p1 = cb.equal(root.get("id"), id);
             restrictions.add(p1);
         }
         if (type != null) {

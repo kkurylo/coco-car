@@ -64,6 +64,23 @@
         </xs:complexType>
     </xs:element>
 
+    <xs:element name="calculateMonthlyCarPriceRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="car" type="tns:car"/>
+                <xs:element name="town" type="tns:town" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="calculateMonthlyCarPriceResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="monthlyCarPrice" type="xs:float"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
 
     <xs:complexType name="car">
         <xs:sequence>
@@ -96,6 +113,14 @@
             <xs:enumeration value="Petrol"/>
             <xs:enumeration value="Diesel"/>
             <xs:enumeration value="LPG"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="town">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Warsaw"/>
+            <xs:enumeration value="Gdansk"/>
+            <xs:enumeration value="Katowice"/>
         </xs:restriction>
     </xs:simpleType>
 
