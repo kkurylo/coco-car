@@ -1,4 +1,4 @@
-package pl.kokokoko;
+package pl.kokokoko.logikabiznesowa;
 
 import io.spring.guides.gs_producing_web_service.Car;
 import io.spring.guides.gs_producing_web_service.Fuel;
@@ -10,6 +10,9 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import pl.kokokoko.Converter;
+import pl.kokokoko.domain.CarEntity;
+import pl.kokokoko.domain.CarRepository;
 
 import javax.transaction.Transactional;
 import javax.xml.datatype.DatatypeConfigurationException;

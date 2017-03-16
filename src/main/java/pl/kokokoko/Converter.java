@@ -3,6 +3,7 @@ package pl.kokokoko;
 import io.spring.guides.gs_producing_web_service.Car;
 import io.spring.guides.gs_producing_web_service.Fuel;
 import io.spring.guides.gs_producing_web_service.Type;
+import pl.kokokoko.domain.CarEntity;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;

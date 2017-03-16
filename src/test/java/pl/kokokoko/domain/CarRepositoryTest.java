@@ -1,4 +1,4 @@
-package pl.kokokoko;
+package pl.kokokoko.domain;
 
 import io.spring.guides.gs_producing_web_service.Fuel;
 import io.spring.guides.gs_producing_web_service.Type;
@@ -73,21 +73,15 @@ public class CarRepositoryTest {
         List<CarEntity> cars = carRepository.findCar(null, null, null, null, null, null,
                 null, null);
         Assert.assertEquals(3, cars.size());
-//        Long id = cars.get(0).getId();
-//        System.out.println(id);
     }
 
     @Test
     public void shouldFindCar() {
         List<CarEntity> cars = carRepository.findCar(null, null, "Jeep", null, null, null,
                 null, null);
-        String color = null;
-        if (cars.size() > 0) {
-            CarEntity car = cars.get(0);
-            color = car.getColor();
-        }
+        CarEntity jeep = cars.get(0);
 
-        Assert.assertEquals("Silver", color);
+        Assert.assertEquals("Silver", jeep.getColor());
     }
     @Test
 //    @Rollback(false)
@@ -112,14 +106,12 @@ public class CarRepositoryTest {
 
     @Test
     public void shouldEditCar() {
-        List<CarEntity> cars = carRepository.findCar(null, null, null, null, null,
+        List<CarEntity> cars = carRepository.findCar(null, null, "Fiat", null, null,
                 null, null, null);
-        CarEntity car = cars.get(2);
-        System.out.println(car.getColor());
-        Long id = car.getId();
-        car.setColor("Pink");
-        System.out.println(car.getColor());
-        carRepository.editCar(car);
+        CarEntity fiat = cars.get(0);
+        Long id = fiat.getId();
+        fiat.setColor("Pink");
+        carRepository.editCar(fiat);
 
         List<CarEntity> cars2 = carRepository.findCar(id, null, null, null, null, null, null,
                 null);

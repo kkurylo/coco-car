@@ -1,16 +1,17 @@
-package pl.kokokoko;
+package pl.kokokoko.domain;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
-@Table(name = "car")
+@Table(name = "Car")
 public class CarEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String type;
     private String make;
     private String model;
@@ -21,21 +22,9 @@ public class CarEntity {
     private String fuel;
     private Date firstRegistration;
     private Float fuelConsumption;
-
-    public CarEntity(Long id, String type, String make, String model, Integer year, BigDecimal price, Integer doors,
-                     String color, String fuel, Date firstRegistration, Float fuelConsumption) {
-        this.id = id;
-        this.type = type;
-        this.make = make;
-        this.model = model;
-        this.year = year;
-        this.price = price;
-        this.doors = doors;
-        this.color = color;
-        this.fuel = fuel;
-        this.firstRegistration = firstRegistration;
-        this.fuelConsumption = fuelConsumption;
-    }
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
+    private OwnerEntity owner;
 
     public CarEntity() {
     }
@@ -126,5 +115,13 @@ public class CarEntity {
 
     public void setFuelConsumption(Float fuelConsumption) {
         this.fuelConsumption = fuelConsumption;
+    }
+
+    public OwnerEntity getOwner() {
+        return owner;
+    }
+
+    public void setOwner(OwnerEntity owner) {
+        this.owner = owner;
     }
 }

@@ -95,6 +95,7 @@
             <xs:element name="fuel" type="tns:fuel" minOccurs="0"/>
             <xs:element name="firstRegistration" type="xs:dateTime" minOccurs="0"/>
             <xs:element name="fuelConsumption" type="xs:float" minOccurs="0"/>
+            <xs:element name="owner" type="xs:float" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
 

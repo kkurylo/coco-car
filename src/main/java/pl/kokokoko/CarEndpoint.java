@@ -6,6 +6,8 @@ import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
+import pl.kokokoko.domain.CarEntity;
+import pl.kokokoko.domain.CarRepository;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import java.text.ParseException;

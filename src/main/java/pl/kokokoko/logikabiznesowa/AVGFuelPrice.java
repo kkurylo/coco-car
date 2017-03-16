@@ -1,4 +1,4 @@
-package pl.kokokoko;
+package pl.kokokoko.logikabiznesowa;
 
 public enum AVGFuelPrice {
 
