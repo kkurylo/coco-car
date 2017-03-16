@@ -95,7 +95,6 @@
             <xs:element name="fuel" type="tns:fuel" minOccurs="0"/>
             <xs:element name="firstRegistration" type="xs:dateTime" minOccurs="0"/>
             <xs:element name="fuelConsumption" type="xs:float" minOccurs="0"/>
-            <xs:element name="owner" type="xs:float" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -124,5 +123,73 @@
             <xs:enumeration value="Katowice"/>
         </xs:restriction>
     </xs:simpleType>
+
+    <xs:element name="findOwnerRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long" minOccurs="0"/>
+                <xs:element name="firstName" type="xs:string" minOccurs="0"/>
+                <xs:element name="lastName" type="xs:string" minOccurs="0"/>
+                <xs:element name="phoneNumber" type="xs:string" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="findOwnerResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="owner" type="tns:owner" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="addOwnerRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="owner" type="tns:owner" minOccurs="1"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="addOwnerResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="owner" type="tns:owner"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="editOwnerRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="owner" type="tns:owner" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="editOwnerResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="owner" type="tns:owner"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="deleteOwnerRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="owner">
+        <xs:sequence>
+            <xs:element name="id" type="xs:long" minOccurs="0"/>
+            <xs:element name="firstName" type="xs:string" minOccurs="0"/>
+            <xs:element name="lastName" type="xs:string" minOccurs="0"/>
+            <xs:element name="phoneNumber" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
 
 </xs:schema>

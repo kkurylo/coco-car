@@ -11,7 +11,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-public class Converter {
+public class CarConverter {
 
     public CarEntity convertToCarEntity(Car c) throws DatatypeConfigurationException {
         CarEntity ce = new CarEntity();

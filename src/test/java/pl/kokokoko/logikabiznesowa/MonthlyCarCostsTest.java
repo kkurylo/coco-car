@@ -10,7 +10,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import pl.kokokoko.Converter;
+import pl.kokokoko.CarConverter;
 import pl.kokokoko.domain.CarEntity;
 import pl.kokokoko.domain.CarRepository;
 
@@ -66,7 +66,7 @@ public class MonthlyCarCostsTest {
 
     @Test
     public void shouldCalculateForGoldBMW() throws DatatypeConfigurationException {
-        Converter converter = new Converter();
+        CarConverter converter = new CarConverter();
         List<CarEntity> cars = carRepository.findCar(null, null, "BMW", null, null, null,
                 null, null);
         CarEntity car = cars.get(0);
