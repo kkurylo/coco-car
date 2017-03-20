@@ -21,11 +21,13 @@ public class CarEndpoint {
 
     private final CarRepository carRepository;
     private final MonthlyCarCosts monthlyCarCosts;
+    private final CarConverter carConverter;
 
     @Autowired
-    public CarEndpoint(CarRepository carRepository, MonthlyCarCosts monthlyCarCosts) {
+    public CarEndpoint(CarRepository carRepository, MonthlyCarCosts monthlyCarCosts, CarConverter carConverter) {
         this.carRepository = carRepository;
         this.monthlyCarCosts = monthlyCarCosts;
+        this.carConverter = carConverter;
     }
 
 
@@ -38,8 +40,7 @@ public class CarEndpoint {
                 request.getColor());
         List<Car> responseCars = response.getCars();
         for (CarEntity carEntity : cars) {
-            CarConverter converter = new CarConverter();
-            Car car = converter.convertToCar(carEntity);
+            Car car = carConverter.convertToCar(carEntity);
             responseCars.add(car);
         }
         return response;
@@ -49,10 +50,10 @@ public class CarEndpoint {
     @ResponsePayload
     public AddCarResponse addCar(@RequestPayload AddCarRequest request) throws DatatypeConfigurationException {
         AddCarResponse response = new AddCarResponse();
-        CarConverter converter = new CarConverter();
-        CarEntity carEntity = converter.convertToCarEntity(request.getCar());
+
+        CarEntity carEntity = carConverter.convertToCarEntity(request.getCar());
         CarEntity ce = carRepository.addCar(carEntity);
-        Car c = converter.convertToCar(ce);
+        Car c = carConverter.convertToCar(ce);
         response.setCar(c);
         return response;
     }
@@ -61,10 +62,10 @@ public class CarEndpoint {
     @ResponsePayload
     public EditCarResponse editCar(@RequestPayload EditCarRequest request) throws DatatypeConfigurationException {
         EditCarResponse response = new EditCarResponse();
-        CarConverter converter = new CarConverter();
-        CarEntity carEntity = converter.convertToCarEntity(request.getCar());
+
+        CarEntity carEntity = carConverter.convertToCarEntity(request.getCar());
         CarEntity ce = carRepository.editCar(carEntity);
-        Car c = converter.convertToCar(ce);
+        Car c = carConverter.convertToCar(ce);
         response.setCar(c);
         return response;
     }

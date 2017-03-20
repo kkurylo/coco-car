@@ -18,10 +18,12 @@ public class OwnerEndpoint {
     private static final String NAMESPACE_URI = "http://spring.io/guides/gs-producing-web-service";
 
     private OwnerRepository ownerRepository;
+    private OwnerConverter ownerConverter;
 
     @Autowired
-    public OwnerEndpoint(OwnerRepository ownerRepository) {
+    public OwnerEndpoint(OwnerRepository ownerRepository, OwnerConverter ownerConverter) {
         this.ownerRepository = ownerRepository;
+        this.ownerConverter = ownerConverter;
     }
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "findOwnerRequest")
@@ -32,8 +34,7 @@ public class OwnerEndpoint {
                 request.getLastName(), request.getPhoneNumber());
         List<Owner> responseOwner = response.getOwner();
         for (OwnerEntity ownerEntity : owners) {
-            OwnerConverter converter = new OwnerConverter();
-            Owner owner = converter.convertToOwner(ownerEntity);
+            Owner owner = ownerConverter.convertToOwner(ownerEntity);
             responseOwner.add(owner);
         }
         return response;
@@ -43,10 +44,9 @@ public class OwnerEndpoint {
     @ResponsePayload
     public AddOwnerResponse addOwner(@RequestPayload AddOwnerRequest request) {
         AddOwnerResponse response = new AddOwnerResponse();
-        OwnerConverter converter = new OwnerConverter();
-        OwnerEntity ownerEntity = converter.convertToOwnerEntity(request.getOwner());
+        OwnerEntity ownerEntity = ownerConverter.convertToOwnerEntity(request.getOwner());
         OwnerEntity oe = ownerRepository.addOwner(ownerEntity);
-        Owner owner = converter.convertToOwner(oe);
+        Owner owner = ownerConverter.convertToOwner(oe);
         response.setOwner(owner);
         return response;
     }
@@ -55,10 +55,9 @@ public class OwnerEndpoint {
     @ResponsePayload
     public EditOwnerResponse editOwner(@RequestPayload EditOwnerRequest request) {
         EditOwnerResponse response = new EditOwnerResponse();
-        OwnerConverter converter = new OwnerConverter();
-        OwnerEntity ownerEntity = converter.convertToOwnerEntity(request.getOwner());
+        OwnerEntity ownerEntity = ownerConverter.convertToOwnerEntity(request.getOwner());
         OwnerEntity oe = ownerRepository.editOwner(ownerEntity);
-        Owner owner = converter.convertToOwner(oe);
+        Owner owner = ownerConverter.convertToOwner(oe);
         response.setOwner(owner);
         return response;
     }

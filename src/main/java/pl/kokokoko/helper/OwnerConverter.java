@@ -1,13 +1,20 @@
 package pl.kokokoko.helper;
 
 import io.spring.guides.gs_producing_web_service.Owner;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import pl.kokokoko.persistance.CarEntity;
+import pl.kokokoko.persistance.CarRepository;
 import pl.kokokoko.persistance.OwnerEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class OwnerConverter {
+
+    @Autowired
+    private CarRepository carRepository;
 
     public OwnerEntity convertToOwnerEntity(Owner o) {
         OwnerEntity oe = new OwnerEntity();
@@ -15,10 +22,21 @@ public class OwnerConverter {
         oe.setFirstName(o.getFirstName());
         oe.setLastName(o.getLastName());
         oe.setPhoneNumber(o.getPhoneNumber());
+        List<Long> carIdList = new ArrayList<>();
+        for (Long car_id : o.getCarId()) {
+            carIdList.add(car_id);
+        }
+        List<CarEntity> carEntityList = new ArrayList<>();
+        for (Long car_id : carIdList) {
+            List<CarEntity> carsEntity = carRepository.findCar(car_id, null, null, null, null,
+                    null, null, null);
+            CarEntity carEntity = carsEntity.get(0);
+            carEntityList.add(carEntity);
+        }
+        oe.setCars(carEntityList);
         return oe;
     }
 
-    @Transactional
     public Owner convertToOwner(OwnerEntity oe) {
         Owner o = new Owner();
         o.setId(oe.getId());

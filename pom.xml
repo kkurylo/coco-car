@@ -14,6 +14,29 @@
         <version>1.5.2.RELEASE</version>
     </parent>
 
+    <!--mvn package -P jar / war-->
+    <profiles>
+        <profile>
+            <id>jar</id>
+            <properties>
+                <packaging.type>jar</packaging.type>
+            </properties>
+        </profile>
+        <profile>
+            <id>war</id>
+            <properties>
+                <packaging.type>war</packaging.type>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                    <scope>provided</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -60,8 +83,6 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <version>1.5.2.RELEASE</version>
         </dependency>
-
-
     </dependencies>
 
     <properties>

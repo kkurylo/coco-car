@@ -3,15 +3,24 @@ package pl.kokokoko.helper;
 import io.spring.guides.gs_producing_web_service.Car;
 import io.spring.guides.gs_producing_web_service.Fuel;
 import io.spring.guides.gs_producing_web_service.Type;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import pl.kokokoko.persistance.CarEntity;
+import pl.kokokoko.persistance.OwnerEntity;
+import pl.kokokoko.persistance.OwnerRepository;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
+@Component
 public class CarConverter {
+
+    @Autowired
+    private OwnerRepository ownerRepository;
 
     public CarEntity convertToCarEntity(Car c) throws DatatypeConfigurationException {
         CarEntity ce = new CarEntity();
@@ -26,6 +35,12 @@ public class CarConverter {
         ce.setFuel(returnStringFromFuel(c.getFuel()));
         ce.setFirstRegistration(returnDateFromXMLDate(c.getFirstRegistration()));
         ce.setFuelConsumption(c.getFuelConsumption());
+        if (c.getOwnerId() != null) {
+            List<OwnerEntity> ownersEntity = ownerRepository.findOwner(c.getOwnerId(), null, null,
+                    null);
+            OwnerEntity ownerEntity = ownersEntity.get(0);
+            ce.setOwner(ownerEntity);
+        }
         return ce;
     }
 
