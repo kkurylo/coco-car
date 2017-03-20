@@ -42,7 +42,7 @@ public class CarConverter {
         c.setFuel(returnFuelFromString(ce.getFuel()));
         c.setFirstRegistration(returnXMLGregorianCalendarFromDate(ce.getFirstRegistration()));
         c.setFuelConsumption(ce.getFuelConsumption());
-        c.setOwnerId(ce.getOwner().getId());
+        if (ce.getOwner() != null) c.setOwnerId(ce.getOwner().getId());
         return c;
     }
 

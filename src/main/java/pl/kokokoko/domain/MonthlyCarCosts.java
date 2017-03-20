@@ -30,7 +30,11 @@ public class MonthlyCarCosts {
         CarConverter converter = new CarConverter();
         Car car = converter.convertToCar(carEntity);
         Float avgCostPerMonth = calculateFuelConsumptionCostPerMonth(car);
-        return calculateFuelConsumptionCostPerMonthDepentOfTown(avgCostPerMonth, town);
+        if (town != null) {
+            return calculateFuelConsumptionCostPerMonthDepentOfTown(avgCostPerMonth, town);
+        } else {
+            return avgCostPerMonth;
+        }
     }
 
     private Float calculateFuelConsumptionCostPerMonth(Car car) {

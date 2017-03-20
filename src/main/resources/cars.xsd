@@ -43,7 +43,7 @@
     <xs:element name="editCarRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="car" type="tns:car" minOccurs="0"/>
+                <xs:element name="car" type="tns:car"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
