@@ -3,12 +3,32 @@ package pl.kokokoko.domain;
 import io.spring.guides.gs_producing_web_service.Car;
 import io.spring.guides.gs_producing_web_service.Fuel;
 import io.spring.guides.gs_producing_web_service.Town;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import pl.kokokoko.helper.CarConverter;
+import pl.kokokoko.persistance.CarEntity;
+import pl.kokokoko.persistance.CarRepository;
+
+import javax.xml.datatype.DatatypeConfigurationException;
+import java.util.List;
 
 @Component
 public class MonthlyCarCosts {
 
-    public float calculateMonthlyCarPrice(Car car, Town town) {
+    private final CarRepository carRepository;
+
+    @Autowired
+    public MonthlyCarCosts(CarRepository carRepository) {
+        this.carRepository = carRepository;
+    }
+
+
+    public float calculateMonthlyCarPrice(Long id, Town town) throws DatatypeConfigurationException {
+        List<CarEntity> cars = carRepository.findCar(id, null, null, null, null, null,
+                null, null);
+        CarEntity carEntity = cars.get(0);
+        CarConverter converter = new CarConverter();
+        Car car = converter.convertToCar(carEntity);
         Float avgCostPerMonth = calculateFuelConsumptionCostPerMonth(car);
         return calculateFuelConsumptionCostPerMonthDepentOfTown(avgCostPerMonth, town);
     }

@@ -67,7 +67,7 @@
     <xs:element name="calculateMonthlyCarPriceRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="car" type="tns:car"/>
+                <xs:element name="id" type="xs:long"/>
                 <xs:element name="town" type="tns:town" minOccurs="0"/>
             </xs:sequence>
         </xs:complexType>

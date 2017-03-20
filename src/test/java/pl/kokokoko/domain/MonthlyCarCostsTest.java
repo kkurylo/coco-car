@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import pl.kokokoko.helper.CarConverter;
 import pl.kokokoko.persistance.CarEntity;
@@ -28,6 +29,7 @@ import static org.assertj.core.api.Assertions.offset;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
+@ActiveProfiles("test")
 public class MonthlyCarCostsTest {
 
     @Autowired
@@ -73,7 +75,7 @@ public class MonthlyCarCostsTest {
 
         Car bmw = converter.convertToCar(car);
 
-        float cost = monthlyCarCosts.calculateMonthlyCarPrice(bmw, Town.WARSAW);
+        float cost = monthlyCarCosts.calculateMonthlyCarPrice(bmw.getId(), Town.WARSAW);
         double cost1 = cost;
 
         assertThat(cost1).isCloseTo(25.090, offset(0.001));

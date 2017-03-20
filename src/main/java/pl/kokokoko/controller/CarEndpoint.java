@@ -6,6 +6,7 @@ import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
+import pl.kokokoko.domain.MonthlyCarCosts;
 import pl.kokokoko.helper.CarConverter;
 import pl.kokokoko.persistance.CarEntity;
 import pl.kokokoko.persistance.CarRepository;
@@ -18,12 +19,15 @@ import java.util.List;
 public class CarEndpoint {
     private static final String NAMESPACE_URI = "http://spring.io/guides/gs-producing-web-service";
 
-    private CarRepository carRepository;
+    private final CarRepository carRepository;
+    private final MonthlyCarCosts monthlyCarCosts;
 
     @Autowired
-    public CarEndpoint(CarRepository carRepository) {
+    public CarEndpoint(CarRepository carRepository, MonthlyCarCosts monthlyCarCosts) {
         this.carRepository = carRepository;
+        this.monthlyCarCosts = monthlyCarCosts;
     }
+
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "findCarRequest")
     @ResponsePayload
@@ -69,6 +73,15 @@ public class CarEndpoint {
     @ResponsePayload
     public void deleteCar(@RequestPayload DeleteCarRequest request) {
         carRepository.deleteCar(request.getId());
+    }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "calculateMonthlyCarPriceRequest")
+    @ResponsePayload
+    public CalculateMonthlyCarPriceResponse calculateMonthlyCarPrice(@RequestPayload CalculateMonthlyCarPriceRequest request) throws DatatypeConfigurationException {
+        CalculateMonthlyCarPriceResponse response = new CalculateMonthlyCarPriceResponse();
+        float monthlyCarPrice = monthlyCarCosts.calculateMonthlyCarPrice(request.getId(), request.getTown());
+        response.setMonthlyCarPrice(monthlyCarPrice);
+        return response;
     }
 
 

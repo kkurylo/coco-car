@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
+@org.springframework.transaction.annotation.Transactional
 public class CarRepository {
 
     @PersistenceContext
