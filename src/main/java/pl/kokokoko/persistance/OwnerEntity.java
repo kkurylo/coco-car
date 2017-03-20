@@ -13,7 +13,7 @@ public class OwnerEntity {
     private String firstName;
     private String lastName;
     private String phoneNumber;
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "owner")
     private List<CarEntity> cars;
 
     public Long getId() {

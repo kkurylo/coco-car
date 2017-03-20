@@ -95,6 +95,7 @@
             <xs:element name="fuel" type="tns:fuel" minOccurs="0"/>
             <xs:element name="firstRegistration" type="xs:dateTime" minOccurs="0"/>
             <xs:element name="fuelConsumption" type="xs:float" minOccurs="0"/>
+            <xs:element name="owner_id" type="xs:long" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -189,7 +190,17 @@
             <xs:element name="firstName" type="xs:string" minOccurs="0"/>
             <xs:element name="lastName" type="xs:string" minOccurs="0"/>
             <xs:element name="phoneNumber" type="xs:string" minOccurs="0"/>
+            <xs:element name="car_id" type="xs:long" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
+
+    <xs:element name="assignCarToOwnerRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="car_id" type="xs:long"/>
+                <xs:element name="owner_id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
 
 </xs:schema>

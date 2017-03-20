@@ -1,7 +1,11 @@
 package pl.kokokoko.helper;
 
 import io.spring.guides.gs_producing_web_service.Owner;
+import org.springframework.transaction.annotation.Transactional;
+import pl.kokokoko.persistance.CarEntity;
 import pl.kokokoko.persistance.OwnerEntity;
+
+import java.util.List;
 
 public class OwnerConverter {
 
@@ -14,12 +18,17 @@ public class OwnerConverter {
         return oe;
     }
 
+    @Transactional
     public Owner convertToOwner(OwnerEntity oe) {
         Owner o = new Owner();
         o.setId(oe.getId());
         o.setFirstName(oe.getFirstName());
         o.setLastName(oe.getLastName());
         o.setPhoneNumber(oe.getPhoneNumber());
+        List<Long> carId = o.getCarId();
+        for (CarEntity carEntity : oe.getCars()) {
+            carId.add(carEntity.getId());
+        }
         return o;
     }
 }
