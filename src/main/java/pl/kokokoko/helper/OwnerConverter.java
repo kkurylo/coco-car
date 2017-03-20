@@ -1,7 +1,7 @@
-package pl.kokokoko;
+package pl.kokokoko.helper;
 
 import io.spring.guides.gs_producing_web_service.Owner;
-import pl.kokokoko.domain.OwnerEntity;
+import pl.kokokoko.persistance.OwnerEntity;
 
 public class OwnerConverter {
 

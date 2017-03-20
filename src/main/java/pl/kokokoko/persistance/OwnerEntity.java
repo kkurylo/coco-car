@@ -1,4 +1,4 @@
-package pl.kokokoko.domain;
+package pl.kokokoko.persistance;
 
 import javax.persistence.*;
 import java.util.List;

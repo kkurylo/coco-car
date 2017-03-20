@@ -1,4 +1,4 @@
-package pl.kokokoko.domain;
+package pl.kokokoko.persistance;
 
 import io.spring.guides.gs_producing_web_service.Type;
 import org.springframework.stereotype.Repository;

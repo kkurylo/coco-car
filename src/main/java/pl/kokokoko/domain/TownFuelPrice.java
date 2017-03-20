@@ -1,4 +1,4 @@
-package pl.kokokoko.logikabiznesowa;
+package pl.kokokoko.domain;
 
 public enum TownFuelPrice {
 

@@ -1,4 +1,4 @@
-package pl.kokokoko;
+package pl.kokokoko.controller;
 
 import io.spring.guides.gs_producing_web_service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,8 +6,9 @@ import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
-import pl.kokokoko.domain.OwnerEntity;
-import pl.kokokoko.domain.OwnerRepository;
+import pl.kokokoko.helper.OwnerConverter;
+import pl.kokokoko.persistance.OwnerEntity;
+import pl.kokokoko.persistance.OwnerRepository;
 
 import java.util.List;
 

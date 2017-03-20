@@ -1,4 +1,4 @@
-package pl.kokokoko;
+package pl.kokokoko.controller;
 
 import io.spring.guides.gs_producing_web_service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,8 +6,9 @@ import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
-import pl.kokokoko.domain.CarEntity;
-import pl.kokokoko.domain.CarRepository;
+import pl.kokokoko.helper.CarConverter;
+import pl.kokokoko.persistance.CarEntity;
+import pl.kokokoko.persistance.CarRepository;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import java.text.ParseException;

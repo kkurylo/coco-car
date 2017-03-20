@@ -1,4 +1,4 @@
-package pl.kokokoko.logikabiznesowa;
+package pl.kokokoko.domain;
 
 import io.spring.guides.gs_producing_web_service.Car;
 import io.spring.guides.gs_producing_web_service.Fuel;
