@@ -1,16 +1,15 @@
 package pl.kokokoko.persistance;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
 @Table(name = "Car")
-public class CarEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class CarEntity extends IdEntity {
 
     private String type;
     private String make;
@@ -26,16 +25,6 @@ public class CarEntity {
     @JoinColumn(name = "owner_id")
     private OwnerEntity owner;
 
-    public CarEntity() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getType() {
         return type;
