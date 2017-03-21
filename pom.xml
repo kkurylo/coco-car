@@ -17,15 +17,18 @@
     <!--mvn package -P jar / war-->
     <profiles>
         <profile>
-            <id>jar</id>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
             <properties>
-                <packaging.type>jar</packaging.type>
+                <project.packaging>jar</project.packaging>
             </properties>
         </profile>
         <profile>
-            <id>war</id>
+            <id>prod</id>
             <properties>
-                <packaging.type>war</packaging.type>
+                <project.packaging>war</project.packaging>
             </properties>
             <dependencies>
                 <dependency>
@@ -36,6 +39,7 @@
             </dependencies>
         </profile>
     </profiles>
+    <packaging>${project.packaging}</packaging>
 
     <dependencies>
         <dependency>
