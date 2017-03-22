@@ -13,7 +13,7 @@ public class RelationshipOwnerCarEndpoint {
 
     private static final String NAMESPACE_URI = "http://spring.io/guides/gs-producing-web-service";
 
-    private RelationshipOwnerCar ownerCars;
+    private final RelationshipOwnerCar ownerCars;
 
     @Autowired
     public RelationshipOwnerCarEndpoint(RelationshipOwnerCar ownerCars) {

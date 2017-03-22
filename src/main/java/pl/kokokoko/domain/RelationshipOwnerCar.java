@@ -21,9 +21,9 @@ public class RelationshipOwnerCar {
     }
 
     public void assignCarToOwner(Long car_id, Long owner_id) {
-        CarEntity car = carRepository.findCarById(car_id);
-        OwnerEntity owner = ownerRepository.findOwnerById(owner_id);
+        CarEntity car = carRepository.findById(car_id);
+        OwnerEntity owner = ownerRepository.referenceById(owner_id);
         car.setOwner(owner);
-        carRepository.editCar(car);
+        carRepository.update(car);
     }
 }

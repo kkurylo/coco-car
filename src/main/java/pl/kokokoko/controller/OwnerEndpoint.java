@@ -17,8 +17,8 @@ public class OwnerEndpoint {
 
     private static final String NAMESPACE_URI = "http://spring.io/guides/gs-producing-web-service";
 
-    private OwnerRepository ownerRepository;
-    private OwnerConverter ownerConverter;
+    private final OwnerRepository ownerRepository;
+    private final OwnerConverter ownerConverter;
 
     @Autowired
     public OwnerEndpoint(OwnerRepository ownerRepository, OwnerConverter ownerConverter) {
@@ -30,7 +30,7 @@ public class OwnerEndpoint {
     @ResponsePayload
     public FindOwnerResponse findOwner(@RequestPayload FindOwnerRequest request) {
         FindOwnerResponse response = new FindOwnerResponse();
-        List<OwnerEntity> owners = ownerRepository.findOwner(request.getId(), request.getFirstName(),
+        List<OwnerEntity> owners = ownerRepository.find(request.getId(), request.getFirstName(),
                 request.getLastName(), request.getPhoneNumber());
         List<Owner> responseOwner = response.getOwner();
         for (OwnerEntity ownerEntity : owners) {
@@ -45,7 +45,7 @@ public class OwnerEndpoint {
     public AddOwnerResponse addOwner(@RequestPayload AddOwnerRequest request) {
         AddOwnerResponse response = new AddOwnerResponse();
         OwnerEntity ownerEntity = ownerConverter.convertToOwnerEntity(request.getOwner());
-        OwnerEntity oe = ownerRepository.addOwner(ownerEntity);
+        OwnerEntity oe = ownerRepository.add(ownerEntity);
         Owner owner = ownerConverter.convertToOwner(oe);
         response.setOwner(owner);
         return response;
@@ -56,7 +56,7 @@ public class OwnerEndpoint {
     public EditOwnerResponse editOwner(@RequestPayload EditOwnerRequest request) {
         EditOwnerResponse response = new EditOwnerResponse();
         OwnerEntity ownerEntity = ownerConverter.convertToOwnerEntity(request.getOwner());
-        OwnerEntity oe = ownerRepository.editOwner(ownerEntity);
+        OwnerEntity oe = ownerRepository.update(ownerEntity);
         Owner owner = ownerConverter.convertToOwner(oe);
         response.setOwner(owner);
         return response;
@@ -65,6 +65,6 @@ public class OwnerEndpoint {
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "deleteOwnerRequest")
     @ResponsePayload
     public void deleteOwner(@RequestPayload DeleteOwnerRequest request) {
-        ownerRepository.deleteOwner(request.getId());
+        ownerRepository.delete(request.getId());
     }
 }

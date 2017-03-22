@@ -42,7 +42,7 @@ public class CarRepositoryTest {
         car1.setFuel(returnStringFromFuel(Fuel.PETROL));
         car1.setFirstRegistration(returnDateFromString("20.06.2007 14:00:00"));
         car1.setFuelConsumption(14.0f);
-        carRepository.addCar(car1);
+        carRepository.add(car1);
 
         CarEntity car2 = new CarEntity();
         car2.setType(returnStringFromType(Type.SUV));
@@ -55,7 +55,7 @@ public class CarRepositoryTest {
         car2.setFuel(returnStringFromFuel(Fuel.PETROL));
         car2.setFirstRegistration(returnDateFromString("15.05.2012 12:00:00"));
         car2.setFuelConsumption(12.0f);
-        carRepository.addCar(car2);
+        carRepository.add(car2);
 
         CarEntity car3 = new CarEntity();
         car3.setType(returnStringFromType(Type.MICROCAR));
@@ -68,19 +68,19 @@ public class CarRepositoryTest {
         car3.setFuel(returnStringFromFuel(Fuel.PETROL));
         car3.setFirstRegistration(returnDateFromString("15.02.2010 12:30:00"));
         car3.setFuelConsumption(4.0f);
-        carRepository.addCar(car3);
+        carRepository.add(car3);
     }
 
     @Test
     public void shouldReturnAllCars() {
-        List<CarEntity> cars = carRepository.findCar(null, null, null, null, null, null,
+        List<CarEntity> cars = carRepository.find(null, null, null, null, null, null,
                 null, null);
         Assert.assertEquals(3, cars.size());
     }
 
     @Test
     public void shouldFindCar() {
-        List<CarEntity> cars = carRepository.findCar(null, null, "Jeep", null, null, null,
+        List<CarEntity> cars = carRepository.find(null, null, "Jeep", null, null, null,
                 null, null);
         CarEntity jeep = cars.get(0);
 
@@ -99,22 +99,22 @@ public class CarRepositoryTest {
         car.setFuel(returnStringFromFuel(Fuel.DIESEL));
         car.setFirstRegistration(returnDateFromString("01.03.2013 14:00:00"));
         car.setFuelConsumption(6.4f);
-        carRepository.addCar(car);
+        carRepository.add(car);
 
-        Assert.assertEquals(4, (carRepository.findCar(null, null, null, null, null,
+        Assert.assertEquals(4, (carRepository.find(null, null, null, null, null,
                 null, null, null)).size());
     }
 
     @Test
     public void shouldEditCar() {
-        List<CarEntity> cars = carRepository.findCar(null, null, "Fiat", null, null,
+        List<CarEntity> cars = carRepository.find(null, null, "Fiat", null, null,
                 null, null, null);
         CarEntity fiat = cars.get(0);
         Long id = fiat.getId();
         fiat.setColor("Pink");
-        carRepository.editCar(fiat);
+        carRepository.update(fiat);
 
-        List<CarEntity> cars2 = carRepository.findCar(id, null, null, null, null, null, null,
+        List<CarEntity> cars2 = carRepository.find(id, null, null, null, null, null, null,
                 null);
         String color = cars2.get(0).getColor();
 
@@ -123,11 +123,11 @@ public class CarRepositoryTest {
 
     @Test
     public void shouldDeleteCar() {
-        List<CarEntity> cars = carRepository.findCar(null, null, null, null, null, null,
+        List<CarEntity> cars = carRepository.find(null, null, null, null, null, null,
                 null, null);
         Long id = cars.get(0).getId();
-        carRepository.deleteCar(id);
-        Assert.assertEquals(2, (carRepository.findCar(null, null, null, null, null,
+        carRepository.delete(id);
+        Assert.assertEquals(2, (carRepository.find(null, null, null, null, null,
                 null, null, null)).size());
     }
 

@@ -46,7 +46,7 @@ public class OwnerRepositoryTest {
         car1.setFuel(returnStringFromFuel(Fuel.PETROL));
         car1.setFirstRegistration(returnDateFromString("20.06.2007 14:00:00"));
         car1.setFuelConsumption(14.0f);
-        carRepository.addCar(car1);
+        carRepository.add(car1);
 
         CarEntity car2 = new CarEntity();
         car2.setType(returnStringFromType(Type.SUV));
@@ -59,7 +59,7 @@ public class OwnerRepositoryTest {
         car2.setFuel(returnStringFromFuel(Fuel.PETROL));
         car2.setFirstRegistration(returnDateFromString("15.05.2012 12:00:00"));
         car2.setFuelConsumption(12.0f);
-        carRepository.addCar(car2);
+        carRepository.add(car2);
 
         CarEntity car3 = new CarEntity();
         car3.setType(returnStringFromType(Type.MICROCAR));
@@ -72,17 +72,17 @@ public class OwnerRepositoryTest {
         car3.setFuel(returnStringFromFuel(Fuel.PETROL));
         car3.setFirstRegistration(returnDateFromString("15.02.2010 12:30:00"));
         car3.setFuelConsumption(4.0f);
-        carRepository.addCar(car3);
+        carRepository.add(car3);
 
         List<CarEntity> owners1cars = new ArrayList<>();
-        List<CarEntity> bmw = carRepository.findCar(null, null, "BMW", null, null,
+        List<CarEntity> bmw = carRepository.find(null, null, "BMW", null, null,
                 null, null, null);
         owners1cars.add(bmw.get(0));
-        List<CarEntity> jeep = carRepository.findCar(null, null, "Jeep", null, null,
+        List<CarEntity> jeep = carRepository.find(null, null, "Jeep", null, null,
                 null, null, null);
         owners1cars.add(jeep.get(0));
         List<CarEntity> owners2cars = new ArrayList<>();
-        List<CarEntity> fiat = carRepository.findCar(null, null, "Fiat", null, null,
+        List<CarEntity> fiat = carRepository.find(null, null, "Fiat", null, null,
                 null, null, null);
         owners2cars.add(fiat.get(0));
 
@@ -91,25 +91,25 @@ public class OwnerRepositoryTest {
         owner1.setLastName("Mickiewicz");
         owner1.setPhoneNumber("734567299");
         owner1.setCars(owners1cars);
-        ownerRepository.addOwner(owner1);
+        ownerRepository.add(owner1);
 
         OwnerEntity owner2 = new OwnerEntity();
         owner2.setFirstName("Juliusz");
         owner2.setLastName("Słowacki");
         owner2.setPhoneNumber("723498444");
         owner2.setCars(owners2cars);
-        ownerRepository.addOwner(owner2);
+        ownerRepository.add(owner2);
     }
 
     @Test
     public void shouldReturnAllOwners() {
-        List<OwnerEntity> owners = ownerRepository.findOwner(null, null, null, null);
+        List<OwnerEntity> owners = ownerRepository.find(null, null, null, null);
         Assert.assertEquals(2, owners.size());
     }
 
     @Test
     public void shouldFindOwner() {
-        List<OwnerEntity> owners = ownerRepository.findOwner(null, "Juliusz", null, null);
+        List<OwnerEntity> owners = ownerRepository.find(null, "Juliusz", null, null);
         OwnerEntity juliusz = owners.get(0);
 
         Assert.assertEquals("Słowacki", juliusz.getLastName());
@@ -121,22 +121,22 @@ public class OwnerRepositoryTest {
         owner.setFirstName("Fiodor");
         owner.setLastName("Dostojewski");
         owner.setPhoneNumber("502567345");
-        ownerRepository.addOwner(owner);
+        ownerRepository.add(owner);
 
-        Assert.assertEquals(3, (ownerRepository.findOwner(null, null, null,
+        Assert.assertEquals(3, (ownerRepository.find(null, null, null,
                 null)).size());
     }
 
     @Test
     public void shouldEditOwner() {
-        List<OwnerEntity> owners = ownerRepository.findOwner(null, "Adam", null,
+        List<OwnerEntity> owners = ownerRepository.find(null, "Adam", null,
                 null);
         OwnerEntity adam = owners.get(0);
         Long id = adam.getId();
         adam.setPhoneNumber("510456834");
-        ownerRepository.editOwner(adam);
+        ownerRepository.update(adam);
 
-        List<OwnerEntity> owners2 = ownerRepository.findOwner(id, null, null, null);
+        List<OwnerEntity> owners2 = ownerRepository.find(id, null, null, null);
         OwnerEntity owner = owners2.get(0);
         String phoneNumber = owner.getPhoneNumber();
 
@@ -145,13 +145,13 @@ public class OwnerRepositoryTest {
 
     @Test
     public void shouldDeleteOwner() {
-        List<OwnerEntity> owners = ownerRepository.findOwner(null, "Juliusz", null,
+        List<OwnerEntity> owners = ownerRepository.find(null, "Juliusz", null,
                 null);
         OwnerEntity juliusz = owners.get(0);
         Long id = juliusz.getId();
-        ownerRepository.deleteOwner(id);
+        ownerRepository.delete(id);
 
-        Assert.assertEquals(1, (ownerRepository.findOwner(null, null, null,
+        Assert.assertEquals(1, (ownerRepository.find(null, null, null,
                 null)).size());
     }
 

@@ -7,14 +7,18 @@ import pl.kokokoko.persistance.CarEntity;
 import pl.kokokoko.persistance.CarRepository;
 import pl.kokokoko.persistance.OwnerEntity;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class OwnerConverter {
 
+    private final CarRepository carRepository;
+
     @Autowired
-    private CarRepository carRepository;
+    public OwnerConverter(CarRepository carRepository) {
+        this.carRepository = carRepository;
+    }
 
     public OwnerEntity convertToOwnerEntity(Owner o) {
         OwnerEntity oe = new OwnerEntity();
@@ -22,12 +26,9 @@ public class OwnerConverter {
         oe.setFirstName(o.getFirstName());
         oe.setLastName(o.getLastName());
         oe.setPhoneNumber(o.getPhoneNumber());
-
-        List<CarEntity> carEntityList = new ArrayList<>();
-        for (Long car_id : o.getCarId()) {
-            CarEntity carEntity = carRepository.findCarById(car_id);
-            carEntityList.add(carEntity);
-        }
+        List<CarEntity> carEntityList = o.getCarId().stream()
+                .map(carRepository::referenceById)
+                .collect(Collectors.toList());
         oe.setCars(carEntityList);
         return oe;
     }

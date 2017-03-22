@@ -1,6 +1,6 @@
 package pl.kokokoko.domain;
 
-public enum AVGFuelPrice {
+public enum AverageFuelPrice {
 
     PETROL(1.74f),
     DIESEL(2.30f),
@@ -8,7 +8,7 @@ public enum AVGFuelPrice {
 
     private final Float value;
 
-    AVGFuelPrice(Float v) {
+    AverageFuelPrice(Float v) {
         value = v;
     }
 

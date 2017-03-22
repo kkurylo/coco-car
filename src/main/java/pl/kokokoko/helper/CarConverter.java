@@ -18,10 +18,14 @@ import java.util.GregorianCalendar;
 @Component
 public class CarConverter {
 
-    @Autowired
-    private OwnerRepository ownerRepository;
+    private final OwnerRepository ownerRepository;
 
-    public CarEntity convertToCarEntity(Car c) throws DatatypeConfigurationException {
+    @Autowired
+    public CarConverter(OwnerRepository ownerRepository) {
+        this.ownerRepository = ownerRepository;
+    }
+
+    public CarEntity convertToCarEntity(Car c) {
         CarEntity ce = new CarEntity();
         ce.setId(c.getId());
         ce.setType(returnStringFromType(c.getType()));
@@ -35,7 +39,7 @@ public class CarConverter {
         ce.setFirstRegistration(returnDateFromXMLDate(c.getFirstRegistration()));
         ce.setFuelConsumption(c.getFuelConsumption());
         if (c.getOwnerId() != null) {
-            OwnerEntity ownerEntity = ownerRepository.findOwnerById(c.getOwnerId());
+            OwnerEntity ownerEntity = ownerRepository.referenceById(c.getOwnerId());
             ce.setOwner(ownerEntity);
         }
         return ce;
@@ -58,16 +62,14 @@ public class CarConverter {
         return c;
     }
 
-    private Date returnDateFromXMLDate(XMLGregorianCalendar xmlDate) throws DatatypeConfigurationException {
-        Date date = xmlDate.toGregorianCalendar().getTime();
-        return date;
+    private Date returnDateFromXMLDate(XMLGregorianCalendar xmlDate) {
+        return xmlDate.toGregorianCalendar().getTime();
     }
 
     private XMLGregorianCalendar returnXMLGregorianCalendarFromDate(Date date) throws DatatypeConfigurationException {
         GregorianCalendar gregorianCalendar = new GregorianCalendar();
         gregorianCalendar.setTime(date);
-        XMLGregorianCalendar xmlDateTime = DatatypeFactory.newInstance().newXMLGregorianCalendar(gregorianCalendar);
-        return xmlDateTime;
+        return DatatypeFactory.newInstance().newXMLGregorianCalendar(gregorianCalendar);
     }
 
     private String returnStringFromFuel(Fuel fuel) {

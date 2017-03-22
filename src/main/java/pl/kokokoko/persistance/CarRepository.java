@@ -21,12 +21,16 @@ public class CarRepository {
     @PersistenceContext
     private EntityManager entityManager;
 
-    public CarEntity findCarById(Long id) {
+    public CarEntity findById(Long id) {
         return entityManager.find(CarEntity.class, id);
     }
 
-    public List<CarEntity> findCar(Long id, Type type, String make, Integer yearFrom, Integer yearTo, BigDecimal priceFrom,
-                                   BigDecimal priceTo, String color) {
+    public CarEntity referenceById(Long id) {
+        return entityManager.getReference(CarEntity.class, id);
+    }
+
+    public List<CarEntity> find(Long id, Type type, String make, Integer yearFrom, Integer yearTo, BigDecimal priceFrom,
+                                BigDecimal priceTo, String color) {
 
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<CarEntity> query = cb.createQuery(CarEntity.class);
@@ -79,22 +83,21 @@ public class CarRepository {
         query.where(cb.and(restrictionsAsArray));
         query.select(root);
 
-        List<CarEntity> result = entityManager.createQuery(query).getResultList();
-        return result;
+        return entityManager.createQuery(query).getResultList();
     }
 
-    public CarEntity addCar(CarEntity car) {
+    public CarEntity add(CarEntity car) {
         entityManager.persist(car);
         return car;
     }
 
-    public CarEntity editCar(CarEntity car) {
+    public CarEntity update(CarEntity car) {
         entityManager.merge(car);
         return car;
     }
 
-    public void deleteCar(Long id) {
-        CarEntity car = entityManager.find(CarEntity.class, id);
+    public void delete(Long id) {
+        CarEntity car = referenceById(id);
         entityManager.remove(car);
     }
 

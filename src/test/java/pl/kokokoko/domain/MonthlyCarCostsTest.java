@@ -52,7 +52,7 @@ public class MonthlyCarCostsTest {
         car1.setFuel(returnStringFromFuel(Fuel.PETROL));
         car1.setFirstRegistration(returnDateFromString("20.06.2007 14:00:00"));
         car1.setFuelConsumption(14.0f);
-        carRepository.addCar(car1);
+        carRepository.add(car1);
 
         CarEntity car2 = new CarEntity();
         car2.setType(returnStringFromType(Type.SUV));
@@ -65,12 +65,12 @@ public class MonthlyCarCostsTest {
         car2.setFuel(returnStringFromFuel(Fuel.PETROL));
         car2.setFirstRegistration(returnDateFromString("15.05.2012 12:00:00"));
         car2.setFuelConsumption(12.0f);
-        carRepository.addCar(car2);
+        carRepository.add(car2);
     }
 
     @Test
     public void shouldCalculateForGoldBMW() throws DatatypeConfigurationException {
-        List<CarEntity> cars = carRepository.findCar(null, null, "BMW", null, null, null,
+        List<CarEntity> cars = carRepository.find(null, null, "BMW", null, null, null,
                 null, null);
         CarEntity car = cars.get(0);
 

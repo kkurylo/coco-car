@@ -24,11 +24,11 @@ public class MonthlyCarCosts {
     }
 
     public float calculateMonthlyCarPrice(Long id, Town town) throws DatatypeConfigurationException {
-        CarEntity carEntity = carRepository.findCarById(id);
+        CarEntity carEntity = carRepository.findById(id);
         Car car = carConverter.convertToCar(carEntity);
         Float avgCostPerMonth = calculateFuelConsumptionCostPerMonth(car);
         if (town != null) {
-            return calculateFuelConsumptionCostPerMonthDepentOfTown(avgCostPerMonth, town);
+            return calculateFuelConsumptionCostPerMonthDependOfTown(avgCostPerMonth, town);
         } else {
             return avgCostPerMonth;
         }
@@ -36,24 +36,25 @@ public class MonthlyCarCosts {
 
     private Float calculateFuelConsumptionCostPerMonth(Car car) {
         Fuel fuel = car.getFuel();
-        Float cost = 0f;
+        Float cost;
         switch (fuel) {
             case PETROL:
-                cost = car.getFuelConsumption() * AVGFuelPrice.PETROL.value();
+                cost = car.getFuelConsumption() * AverageFuelPrice.PETROL.value();
                 break;
             case DIESEL:
-                cost = car.getFuelConsumption() * AVGFuelPrice.DIESEL.value();
+                cost = car.getFuelConsumption() * AverageFuelPrice.DIESEL.value();
                 break;
             case LPG:
-                cost = car.getFuelConsumption() * AVGFuelPrice.LPG.value();
+                cost = car.getFuelConsumption() * AverageFuelPrice.LPG.value();
                 break;
-
+            default:
+                throw new RuntimeException("Unsupported fuel: " + fuel);
         }
         return cost;
     }
 
-    private Float calculateFuelConsumptionCostPerMonthDepentOfTown(Float avgCost, Town town) {
-        Float cost = 0f;
+    private Float calculateFuelConsumptionCostPerMonthDependOfTown(Float avgCost, Town town) {
+        Float cost;
         switch (town) {
             case WARSAW:
                 cost = avgCost + (avgCost * TownFuelPrice.WARSAW.value());
@@ -64,6 +65,8 @@ public class MonthlyCarCosts {
             case KATOWICE:
                 cost = avgCost + (avgCost * TownFuelPrice.KATOWICE.value());
                 break;
+            default:
+                throw new RuntimeException("Unsupported town: " + town);
         }
         return cost;
     }

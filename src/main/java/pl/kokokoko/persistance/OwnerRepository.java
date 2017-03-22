@@ -19,11 +19,15 @@ public class OwnerRepository {
     @PersistenceContext
     private EntityManager entityManager;
 
-    public OwnerEntity findOwnerById(Long id) {
+    public OwnerEntity findById(Long id) {
         return entityManager.find(OwnerEntity.class, id);
     }
 
-    public List<OwnerEntity> findOwner(Long id, String firstName, String lastName, String phoneNumber) {
+    public OwnerEntity referenceById(Long id) {
+        return entityManager.getReference(OwnerEntity.class, id);
+    }
+
+    public List<OwnerEntity> find(Long id, String firstName, String lastName, String phoneNumber) {
 
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<OwnerEntity> query = cb.createQuery(OwnerEntity.class);
@@ -57,22 +61,21 @@ public class OwnerRepository {
         query.where(cb.and(restrictionsAsArray));
         query.select(root);
 
-        List<OwnerEntity> result = entityManager.createQuery(query).getResultList();
-        return result;
+        return entityManager.createQuery(query).getResultList();
     }
 
-    public OwnerEntity addOwner(OwnerEntity owner) {
+    public OwnerEntity add(OwnerEntity owner) {
         entityManager.persist(owner);
         return owner;
     }
 
-    public OwnerEntity editOwner(OwnerEntity owner) {
+    public OwnerEntity update(OwnerEntity owner) {
         entityManager.merge(owner);
         return owner;
     }
 
-    public void deleteOwner(Long id) {
-        OwnerEntity owner = entityManager.find(OwnerEntity.class, id);
+    public void delete(Long id) {
+        OwnerEntity owner = referenceById(id);
         entityManager.remove(owner);
     }
 

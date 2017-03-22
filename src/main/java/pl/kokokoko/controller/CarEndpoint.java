@@ -12,7 +12,6 @@ import pl.kokokoko.persistance.CarEntity;
 import pl.kokokoko.persistance.CarRepository;
 
 import javax.xml.datatype.DatatypeConfigurationException;
-import java.text.ParseException;
 import java.util.List;
 
 @Endpoint
@@ -33,9 +32,9 @@ public class CarEndpoint {
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "findCarRequest")
     @ResponsePayload
-    public FindCarResponse findCar(@RequestPayload FindCarRequest request) throws ParseException, DatatypeConfigurationException {
+    public FindCarResponse findCar(@RequestPayload FindCarRequest request) throws DatatypeConfigurationException {
         FindCarResponse response = new FindCarResponse();
-        List<CarEntity> cars = carRepository.findCar(request.getId(), request.getType(), request.getMake(),
+        List<CarEntity> cars = carRepository.find(request.getId(), request.getType(), request.getMake(),
                 request.getYearFrom(), request.getYearTo(), request.getPriceFrom(), request.getPriceTo(),
                 request.getColor());
         List<Car> responseCars = response.getCars();
@@ -52,7 +51,7 @@ public class CarEndpoint {
         AddCarResponse response = new AddCarResponse();
 
         CarEntity carEntity = carConverter.convertToCarEntity(request.getCar());
-        CarEntity ce = carRepository.addCar(carEntity);
+        CarEntity ce = carRepository.add(carEntity);
         Car c = carConverter.convertToCar(ce);
         response.setCar(c);
         return response;
@@ -64,7 +63,7 @@ public class CarEndpoint {
         EditCarResponse response = new EditCarResponse();
 
         CarEntity carEntity = carConverter.convertToCarEntity(request.getCar());
-        CarEntity ce = carRepository.editCar(carEntity);
+        CarEntity ce = carRepository.update(carEntity);
         Car c = carConverter.convertToCar(ce);
         response.setCar(c);
         return response;
@@ -73,7 +72,7 @@ public class CarEndpoint {
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "deleteCarRequest")
     @ResponsePayload
     public void deleteCar(@RequestPayload DeleteCarRequest request) {
-        carRepository.deleteCar(request.getId());
+        carRepository.delete(request.getId());
     }
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "calculateMonthlyCarPriceRequest")
