@@ -2,7 +2,6 @@ package pl.kokokoko.persistance;
 
 import io.spring.guides.gs_producing_web_service.Type;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-@Transactional
 public class CarRepository {
 
     @PersistenceContext
