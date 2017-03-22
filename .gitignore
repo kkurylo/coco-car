@@ -58,3 +58,4 @@ fabric.properties
 /scraper.iml
 .idea/
 scraper.iml
+/src/main/java/io/spring/guides/gs_producing_web_service/
