@@ -22,12 +22,9 @@ public class OwnerConverter {
         oe.setFirstName(o.getFirstName());
         oe.setLastName(o.getLastName());
         oe.setPhoneNumber(o.getPhoneNumber());
-        List<Long> carIdList = new ArrayList<>();
-        for (Long car_id : o.getCarId()) {
-            carIdList.add(car_id);
-        }
+
         List<CarEntity> carEntityList = new ArrayList<>();
-        for (Long car_id : carIdList) {
+        for (Long car_id : o.getCarId()) {
             List<CarEntity> carsEntity = carRepository.findCar(car_id, null, null, null, null,
                     null, null, null);
             CarEntity carEntity = carsEntity.get(0);
@@ -44,9 +41,7 @@ public class OwnerConverter {
         o.setLastName(oe.getLastName());
         o.setPhoneNumber(oe.getPhoneNumber());
         List<Long> carId = o.getCarId();
-        for (CarEntity carEntity : oe.getCars()) {
-            carId.add(carEntity.getId());
-        }
+        oe.getCars().forEach(carEntity -> carId.add(carEntity.getId()));
         return o;
     }
 }

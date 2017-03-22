@@ -16,19 +16,19 @@ import java.util.List;
 public class MonthlyCarCosts {
 
     private final CarRepository carRepository;
+    private final CarConverter carConverter;
 
     @Autowired
-    public MonthlyCarCosts(CarRepository carRepository) {
+    public MonthlyCarCosts(CarRepository carRepository, CarConverter carConverter) {
         this.carRepository = carRepository;
+        this.carConverter = carConverter;
     }
-
 
     public float calculateMonthlyCarPrice(Long id, Town town) throws DatatypeConfigurationException {
         List<CarEntity> cars = carRepository.findCar(id, null, null, null, null, null,
                 null, null);
         CarEntity carEntity = cars.get(0);
-        CarConverter converter = new CarConverter();
-        Car car = converter.convertToCar(carEntity);
+        Car car = carConverter.convertToCar(carEntity);
         Float avgCostPerMonth = calculateFuelConsumptionCostPerMonth(car);
         if (town != null) {
             return calculateFuelConsumptionCostPerMonthDepentOfTown(avgCostPerMonth, town);
@@ -49,7 +49,6 @@ public class MonthlyCarCosts {
                 break;
             case LPG:
                 cost = car.getFuelConsumption() * AVGFuelPrice.LPG.value();
-
                 break;
 
         }

@@ -36,6 +36,8 @@ public class MonthlyCarCostsTest {
     private MonthlyCarCosts monthlyCarCosts;
     @Autowired
     private CarRepository carRepository;
+    @Autowired
+    private CarConverter carConverter;
 
     @Before
     public void initDatabaseWithCars() throws ParseException, DatatypeConfigurationException {
@@ -68,12 +70,11 @@ public class MonthlyCarCostsTest {
 
     @Test
     public void shouldCalculateForGoldBMW() throws DatatypeConfigurationException {
-        CarConverter converter = new CarConverter();
         List<CarEntity> cars = carRepository.findCar(null, null, "BMW", null, null, null,
                 null, null);
         CarEntity car = cars.get(0);
 
-        Car bmw = converter.convertToCar(car);
+        Car bmw = carConverter.convertToCar(car);
 
         float cost = monthlyCarCosts.calculateMonthlyCarPrice(bmw.getId(), Town.WARSAW);
         double cost1 = cost;

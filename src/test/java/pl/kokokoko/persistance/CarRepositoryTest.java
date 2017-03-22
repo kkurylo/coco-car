@@ -87,10 +87,8 @@ public class CarRepositoryTest {
         Assert.assertEquals("Silver", jeep.getColor());
     }
     @Test
-//    @Rollback(false)
     public void shouldAddCar() throws ParseException, DatatypeConfigurationException {
         CarEntity car = new CarEntity();
-//        car1.setId(1L);
         car.setType(returnStringFromType(Type.HATCHBACK));
         car.setMake("Volkswagen");
         car.setModel("Golf VII");
