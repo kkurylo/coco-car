@@ -14,7 +14,6 @@ import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.List;
 
 @Component
 public class CarConverter {
@@ -36,9 +35,7 @@ public class CarConverter {
         ce.setFirstRegistration(returnDateFromXMLDate(c.getFirstRegistration()));
         ce.setFuelConsumption(c.getFuelConsumption());
         if (c.getOwnerId() != null) {
-            List<OwnerEntity> ownersEntity = ownerRepository.findOwner(c.getOwnerId(), null, null,
-                    null);
-            OwnerEntity ownerEntity = ownersEntity.get(0);
+            OwnerEntity ownerEntity = ownerRepository.findOwnerById(c.getOwnerId());
             ce.setOwner(ownerEntity);
         }
         return ce;

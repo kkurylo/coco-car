@@ -25,9 +25,7 @@ public class OwnerConverter {
 
         List<CarEntity> carEntityList = new ArrayList<>();
         for (Long car_id : o.getCarId()) {
-            List<CarEntity> carsEntity = carRepository.findCar(car_id, null, null, null, null,
-                    null, null, null);
-            CarEntity carEntity = carsEntity.get(0);
+            CarEntity carEntity = carRepository.findCarById(car_id);
             carEntityList.add(carEntity);
         }
         oe.setCars(carEntityList);

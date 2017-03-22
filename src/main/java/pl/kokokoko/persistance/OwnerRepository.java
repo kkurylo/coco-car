@@ -19,6 +19,10 @@ public class OwnerRepository {
     @PersistenceContext
     private EntityManager entityManager;
 
+    public OwnerEntity findOwnerById(Long id) {
+        return entityManager.find(OwnerEntity.class, id);
+    }
+
     public List<OwnerEntity> findOwner(Long id, String firstName, String lastName, String phoneNumber) {
 
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();

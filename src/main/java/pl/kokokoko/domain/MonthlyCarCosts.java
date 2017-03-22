@@ -10,7 +10,6 @@ import pl.kokokoko.persistance.CarEntity;
 import pl.kokokoko.persistance.CarRepository;
 
 import javax.xml.datatype.DatatypeConfigurationException;
-import java.util.List;
 
 @Component
 public class MonthlyCarCosts {
@@ -25,9 +24,7 @@ public class MonthlyCarCosts {
     }
 
     public float calculateMonthlyCarPrice(Long id, Town town) throws DatatypeConfigurationException {
-        List<CarEntity> cars = carRepository.findCar(id, null, null, null, null, null,
-                null, null);
-        CarEntity carEntity = cars.get(0);
+        CarEntity carEntity = carRepository.findCarById(id);
         Car car = carConverter.convertToCar(carEntity);
         Float avgCostPerMonth = calculateFuelConsumptionCostPerMonth(car);
         if (town != null) {

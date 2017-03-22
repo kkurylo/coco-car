@@ -21,6 +21,10 @@ public class CarRepository {
     @PersistenceContext
     private EntityManager entityManager;
 
+    public CarEntity findCarById(Long id) {
+        return entityManager.find(CarEntity.class, id);
+    }
+
     public List<CarEntity> findCar(Long id, Type type, String make, Integer yearFrom, Integer yearTo, BigDecimal priceFrom,
                                    BigDecimal priceTo, String color) {
 

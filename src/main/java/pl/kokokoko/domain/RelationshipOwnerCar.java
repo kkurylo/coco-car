@@ -7,7 +7,6 @@ import pl.kokokoko.persistance.CarRepository;
 import pl.kokokoko.persistance.OwnerEntity;
 import pl.kokokoko.persistance.OwnerRepository;
 
-import java.util.List;
 
 @Component
 public class RelationshipOwnerCar {
@@ -22,11 +21,8 @@ public class RelationshipOwnerCar {
     }
 
     public void assignCarToOwner(Long car_id, Long owner_id) {
-        List<CarEntity> cars = carRepository.findCar(car_id, null, null, null, null, null,
-                null, null);
-        CarEntity car = cars.get(0);
-        List<OwnerEntity> owners = ownerRepository.findOwner(owner_id, null, null, null);
-        OwnerEntity owner = owners.get(0);
+        CarEntity car = carRepository.findCarById(car_id);
+        OwnerEntity owner = ownerRepository.findOwnerById(owner_id);
         car.setOwner(owner);
         carRepository.editCar(car);
     }
